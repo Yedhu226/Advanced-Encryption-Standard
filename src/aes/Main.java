@@ -16,6 +16,10 @@
  */
 package aes;
 
+import static aes.aes.decrypt;
+import static aes.aes.encrypt;
+import java.util.Scanner;
+
 /**
  *
  * @author yedhu226
@@ -26,7 +30,17 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        String P,K;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter Plaintext: ");
+        P=sc.nextLine();
+        System.out.println("Enter Key: ");
+        K=sc.nextLine();
+        System.out.println("Cipher Text ");
+        String C=encrypt(P,K);
+        System.out.println(C);
+//        P=decrypt(C,K);
+//        System.out.println(P);
     }
     
 }

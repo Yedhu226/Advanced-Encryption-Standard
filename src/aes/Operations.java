@@ -16,6 +16,7 @@
  */
 package aes;
 
+import static aes.Substitute.getSubstituteByte;
 import java.math.BigInteger;
 
 /**
@@ -25,11 +26,11 @@ import java.math.BigInteger;
 public class Operations {
 
     static String XOR(String A, String B) {
-        return DecimalToHex(XOR(HexToDecimal(A),HexToDecimal(B)));
+        return DecimalToHex(XOR(HexToDecimal(A), HexToDecimal(B)));
     }
 
     static int XOR(int A, int B) {
-        return A^B;
+        return A ^ B;
     }
 
     static Integer HexToDecimal(String in) {
@@ -42,5 +43,34 @@ public class Operations {
             h = "0" + h;
         }
         return h;
+    }
+
+    static int gmul(int a, int b) {
+        int p = 0;
+        for (int i = 0; i < 8; i++) {
+            if ((b & 1) != 0) {
+                p ^= a;
+            }
+            boolean highBitSet = (a & 0x80) != 0;
+            a <<= 1;
+            if (highBitSet) {
+                a ^= 0x1b;
+            }
+            b >>= 1;
+        }
+        return p & 0xFF;
+    }
+    
+    
+    
+    static String[] gsub(String[] col,String rcon){
+        String t=getSubstituteByte(col[0]);
+        for(int i=0;i<col.length-1;i++){
+            col[i]=getSubstituteByte(col[i+1]);
+       
+        }
+        col[col.length-1]=t;
+        col[0]=XOR(col[0],rcon);
+        return col;
     }
 }
